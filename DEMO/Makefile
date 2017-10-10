@@ -1,49 +1,4 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 all: llDemo
-
 CFLAGS=-g -O3
 
 # Symbols helpful for understanding the productions
