@@ -33,4 +33,7 @@ void llPrint(LList *lp, char *msg);
 /* check llist consistency, always returns zero */
 int llCheck(LList *lp);
 
+/* discards the first item and returns the string it contained */
+char llGet(LList *lp);
+
 #endif	/* included */
