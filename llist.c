@@ -99,3 +99,22 @@ int llCheck(LList *lp)
   }
   return 0;
 }
+
+/* discards the first item and returns the string it contained */
+char llGet(LList *lp) {
+  doCheck(lp);
+  LLItem *ip = lp->first;
+  int len;
+  char *s = ip->str;
+  char *scopy;
+  for (len = 0; s[len]; len++) /* compute length */
+    ;
+  scopy = (char *)malloc(len+1);
+  for (len = 0; s[len]; len++) /* copy chars */
+    scopy[len] = s[len];
+  scopy[len] = 0;			/* terminate copy */
+
+  printf("First string: <%s>\n", scopy);
+  lp->first = lp->first->next;
+  return *scopy;
+}

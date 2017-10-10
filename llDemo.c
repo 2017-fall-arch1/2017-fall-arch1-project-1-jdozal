@@ -30,6 +30,11 @@ int main()
 
   llPrint(lp, "List contents, after building list:");
 
+  llGet(lp);
+
+  printf("After llGet()...\n");
+  llPrint(lp,0);
+  
   llMakeEmpty(lp);
 
   printf("After emptying the list...");
