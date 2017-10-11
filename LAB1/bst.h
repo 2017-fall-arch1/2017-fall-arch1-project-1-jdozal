@@ -15,5 +15,12 @@ typedef struct {
 extern int bstDoCheck;
 
 /* create a new BST */ 
-BST *bstAlloc();
+BST *BSTAlloc();
+
+/* locate employee in BST */
+void bstPut(BST *bst, char *n);
+
+/* print tree ascending order*/
+void printAsc(Employee *e);
+
 #endif

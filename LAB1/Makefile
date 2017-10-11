@@ -14,5 +14,6 @@ clean:
 	rm -f *.o bstDemo
 
 demo: bstDemo
-	echo "hello" 
+	(echo b; echo a; echo c; echo h; echo d) | ./bstDemo
+	echo hello;
 

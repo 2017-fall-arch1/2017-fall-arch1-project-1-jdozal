@@ -1,6 +1,7 @@
 #include <stdio.h>		/* for puts,  */
 #include <stdlib.h> 		/* for malloc */
 #include <assert.h>		/* for assert */
+#include <string.h>             /* for strcmp */
 #include "bst.h"		
 
 int bstDoCheck = 1;
@@ -34,5 +35,41 @@ void bstPut(BST *bst, char *n) {
   e = (Employee *)malloc(sizeof(Employee));
   e->name = ncopy;
   e->isLeaf = 1;
+  e->right = 0;
+  e->left = 0;
 
+  /* locate employee in bst */
+  if(bst->root){
+    printf("Employee: <%s>\n", ncopy);
+    Employee *curr = bst->root;
+    while(curr) {
+      if(strcmp(curr->name, ncopy)<0){
+	printf("enter if\n");
+	if(curr->right == 0){
+	  curr->isLeaf = 0;
+	  curr->right = e;
+	  return;
+	}
+	curr = curr->right;
+      }else{
+	printf("enter else\n");
+	if(curr->left == 0){
+	  curr->isLeaf = 0;
+	  curr->left = e;
+	  return;
+	}
+	curr = curr->left;
+      }
+    }
+  }else{
+    bst->root = e;
+  }
+}
+void printAsc(Employee *e) {
+  if(!e){
+    return;
+  }
+  printAsc(e->left);
+  printf("Employee: <%s>\n", e->name);
+  printAsc(e->right);
 }
