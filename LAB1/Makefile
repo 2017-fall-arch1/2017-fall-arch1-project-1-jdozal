@@ -8,11 +8,11 @@ bstDemo: bst.o bstDemo.o
 bst.o: bst.c bst.h 
 	cc -c $(CFLAGS) bst.c
 
-bstDemo.o: bstDemo.o bst.h
+bstDemo.o: bstDemo.c bst.h
 	cc -c $(CFLAGS) bstDemo.c
 clean:
 	rm -f *.o bstDemo
 
-lab1: bstDemo
+demo: bstDemo
 	echo "hello" 
 
