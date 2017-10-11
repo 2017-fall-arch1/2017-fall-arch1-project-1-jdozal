@@ -25,7 +25,7 @@ void add(BST *bst){
   printf("Enter new employee: ");
   scanf("%s", name);
   bstPut(bst, name);
-  printAsc(bst);
+  printAsc(bst->root);
 }
 int main(){
   char buf[100];
@@ -33,30 +33,30 @@ int main(){
   /* Make empty BST */
   BST *bst = BSTAlloc();
 
-  printf("Welcome to the Personnel Management System\n\n Enter a number to perform an action:\n  1: Add a new employee\n  2: Remove an employee\n  3: List  all employees\n\n");
+  printf("Welcome to the Personnel Management System\n\n Enter a number to perform an action:\n  1: Add a new employee\n  2: Remove an employee\n  3: List  all employees 0: Exit\n\n");
 
-  printf("Option: ");
-  int option = getchar();
-
-  printf("\n");
-
-  switch (option) {
-  case '0':
-    printf("Bye");
-    return 0;
-  case '1':
-    printf("add");
-    add(bst);
-    break;
-  case '2':
-    printf("remove");
-    break;
-  case '3':
-    printAsc(bst->root);
-    break;
-  default:
-    printf("Not a valid option");
+   for(;;){
+     printf("\nOption: ");
+     int option = getchar();
+    switch (option) {
+    case '0':
+      printf("\nBye");
+      return 0;
+    case '1':
+      printf("\nadd");
+      add(bst);
+      break;
+    case '2':
+      printf("\nremove");
+      break;
+    case '3':
+      printAsc(bst->root);
+      break;
+    default:
+      printf("\nNot a valid option");
   }
+    getchar(); /* getting rid of new lines */
+   }
   /* if(option =='0'){
     printf("Tenkiubai\n");
     return 0;
