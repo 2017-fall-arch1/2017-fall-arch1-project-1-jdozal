@@ -1,15 +1,18 @@
-all: bst
+all: bstDemo
 
 CFLAGS=-g -O3
 
-bst: bst.o
+bstDemo: bst.o bstDemo.o
 	cc -o $@ $^
 
-bst.o: bst.h
+bst.o: bst.c bst.h 
 	cc -c $(CFLAGS) bst.c
-clean:
-	rm -f *.o bst
 
-lab1: bst
+bstDemo.o: bstDemo.o bst.h
+	cc -c $(CFLAGS) bstDemo.c
+clean:
+	rm -f *.o bstDemo
+
+lab1: bstDemo
 	echo "hello" 
 

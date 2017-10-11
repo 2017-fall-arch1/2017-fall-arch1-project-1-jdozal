@@ -7,4 +7,12 @@ typedef struct Employee {
   char *name;
 } Employee;
 
+typedef struct {
+  Employee *root;
+} BST;
+
+extern int bstDoCheck;
+
+/* create a new BST */ 
+BST *bstAlloc();
 #endif
