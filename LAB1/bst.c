@@ -15,3 +15,24 @@ BST *BSTAlloc() {
   return bst;
 }
 
+/* append a copy of name to end of list */
+void bstPut(BST *bst, char *n) {
+  int len;
+  char *ncopy;
+  Employee *e;
+
+  doCheck(bst);
+  /* w = freshly allocated copy of putWord */
+  for (len = 0; n[len]; len++) /* compute length */
+    ;
+  ncopy = (char *)malloc(len+1);
+  for (len = 0; n[len]; len++) /* copy chars */
+    ncopy[len] = n[len];
+  ncopy[len] = 0;			/* terminate copy */
+
+  /* e = new Employee with copy of name */
+  e = (Employee *)malloc(sizeof(Employee));
+  e->name = ncopy;
+  e->isLeaf = 1;
+
+}

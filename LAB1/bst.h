@@ -5,6 +5,7 @@
 typedef struct Employee {
   struct Employee *right, *left;
   char *name;
+  int isLeaf;
 } Employee;
 
 typedef struct {
