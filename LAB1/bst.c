@@ -16,7 +16,7 @@ BST *BSTAlloc() {
   return bst;
 }
 
-/* append a copy of name to end of list */
+/* append a copy of name to bst */
 void bstPut(BST *bst, char *n) {
   int len;
   char *ncopy;
@@ -72,4 +72,22 @@ void printAsc(Employee *e) {
   printAsc(e->left);
   printf("Employee: <%s>\n", e->name);
   printAsc(e->right);
+}
+
+Employee search(Employee *e, char *n) {
+  if(!e){
+    printf("%s is not on the list\n", n);
+    return *e;
+  }
+  int cmp = strcmp(e->name, n);
+
+  if(cmp == 0)
+    return *e;
+  if(cmp < 0){
+    return search(e->right, n);
+  }
+  if(cmp > 0){
+    return search(e->left, n);
+  }
+  return *e;
 }

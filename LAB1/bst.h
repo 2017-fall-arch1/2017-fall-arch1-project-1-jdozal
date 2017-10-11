@@ -17,10 +17,12 @@ extern int bstDoCheck;
 /* create a new BST */ 
 BST *BSTAlloc();
 
-/* locate employee in BST */
+/* add employee to BST */
 void bstPut(BST *bst, char *n);
 
 /* print tree ascending order*/
 void printAsc(Employee *e);
 
+/* search for employee */
+Employee search(Employee *e, char *n);
 #endif
