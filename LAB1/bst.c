@@ -16,6 +16,13 @@ BST *BSTAlloc() {
   return bst;
 }
 
+/* Check if employee is leaf */
+int isLeaf(Employee *e){
+  if(!e->right && !e->left)
+    return 1;
+  return 0;
+}
+
 /* append a copy of name to bst */
 void bstPut(BST *bst, char *n) {
   int len;
@@ -34,7 +41,6 @@ void bstPut(BST *bst, char *n) {
   /* e = new Employee with copy of name */
   e = (Employee *)malloc(sizeof(Employee));
   e->name = ncopy;
-  e->isLeaf = 1;
   e->right = 0;
   e->left = 0;
 
@@ -42,19 +48,17 @@ void bstPut(BST *bst, char *n) {
   if(bst->root){
     printf("Employee: <%s>\n", ncopy);
     Employee *curr = bst->root;
+    /* looking for leaf*/
     while(curr) {
+      printf("test\n");
       if(strcmp(curr->name, ncopy)<0){
-	printf("enter if\n");
 	if(curr->right == 0){
-	  curr->isLeaf = 0;
 	  curr->right = e;
 	  return;
 	}
 	curr = curr->right;
       }else{
-	printf("enter else\n");
 	if(curr->left == 0){
-	  curr->isLeaf = 0;
 	  curr->left = e;
 	  return;
 	}
@@ -65,6 +69,7 @@ void bstPut(BST *bst, char *n) {
     bst->root = e;
   }
 }
+
 void printAsc(Employee *e) {
   if(!e){
     return;
@@ -90,4 +95,20 @@ struct Employee *search(Employee *e, char *n) {
     return search(e->left, n);
   }
   return e;
+}
+
+void removeEmployee(Employee *e){
+
+  printf("<%s>\n", e->name);
+  printf("right = %s", e->right->name);
+  if(e->left && e->right){
+    printf("both children present");
+  } else if(e->left){
+    printf("only left present");
+  } else if(e->right){
+    printf("only right  present");
+  } else{
+    printf("is leaf");
+    
+  }
 }

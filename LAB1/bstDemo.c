@@ -19,14 +19,20 @@ int gets_n(char *s, int limit) {
   
 }
 
+/* helper function to remove, scans employee to remove, calls seach and remove  */
 void rmv(BST *bst) {
   char name[100];
 
-  printf("Enter employee to search: ");
+  printf("Enter employee to remove: ");
   scanf("%s", name);
   Employee *e = search(bst->root, name);
-  if(e) printf("%s", e->name);
+  /* if employee is indeed in the bst call removeEmployee */
+  if(e)
+    removeEmployee(e);
+  
 }
+
+/* helper function to add, scans name to add and calls bstPut  */
 void add(BST *bst){
   char name[100];
 

@@ -5,7 +5,6 @@
 typedef struct Employee {
   struct Employee *right, *left;
   char *name;
-  int isLeaf;
 } Employee;
 
 typedef struct {
@@ -25,4 +24,7 @@ void printAsc(Employee *e);
 
 /* search for employee */
 struct Employee *search(Employee *e, char *n);
+
+/* removes employee */
+void removeEmployee(Employee *e);
 #endif
