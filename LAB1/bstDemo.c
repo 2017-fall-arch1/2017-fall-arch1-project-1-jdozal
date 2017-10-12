@@ -19,13 +19,13 @@ int gets_n(char *s, int limit) {
   
 }
 
-void remove(BST *bst) {
+void rmv(BST *bst) {
   char name[100];
 
-  printf("Enter employee to search");
+  printf("Enter employee to search: ");
   scanf("%s", name);
   Employee *e = search(bst->root, name);
-  printf("%s", e->name);
+  if(e) printf("%s", e->name);
 }
 void add(BST *bst){
   char name[100];
@@ -51,12 +51,10 @@ int main(){
       printf("\nBye");
       return 0;
     case '1':
-      printf("\nadd");
       add(bst);
       break;
     case '2':
-      printf("\nremove");
-      remove(bst);
+      rmv(bst);
       break;
     case '3':
       printAsc(bst->root);

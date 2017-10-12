@@ -74,20 +74,20 @@ void printAsc(Employee *e) {
   printAsc(e->right);
 }
 
-Employee search(Employee *e, char *n) {
+struct Employee *search(Employee *e, char *n) {
   if(!e){
     printf("%s is not on the list\n", n);
-    return *e;
+    return e;
   }
   int cmp = strcmp(e->name, n);
 
   if(cmp == 0)
-    return *e;
+    return e;
   if(cmp < 0){
     return search(e->right, n);
   }
   if(cmp > 0){
     return search(e->left, n);
   }
-  return *e;
+  return e;
 }

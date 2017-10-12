@@ -24,5 +24,5 @@ void bstPut(BST *bst, char *n);
 void printAsc(Employee *e);
 
 /* search for employee */
-Employee search(Employee *e, char *n);
+struct Employee *search(Employee *e, char *n);
 #endif
