@@ -73,7 +73,7 @@ void interface(){
 int main(){
   char buf[100];
   FILE *fp;
-  fp = fopen("/Users/jdozal/Documents/2017-fall-arch1-project-1-jdozal/LAB1/test.txt", "a");
+  fp = fopen("test.txt", "a");
   if(fp){
     readFile(fp);
   } else {
