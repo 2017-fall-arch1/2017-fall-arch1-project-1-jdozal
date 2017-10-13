@@ -72,8 +72,15 @@ void interface(){
 }
 int main(){
   char buf[100];
-  
-  interface();
+  FILE *fp;
+  fp = fopen("/Users/jdozal/Documents/2017-fall-arch1-project-1-jdozal/LAB1/test.txt", "a");
+  if(fp){
+    readFile(fp);
+  } else {
+    printf("Not such file\n");
+  }
+  fclose(fp);
+  /*interface();*/
   
   /* if(option =='0'){
     printf("Tenkiubai\n");

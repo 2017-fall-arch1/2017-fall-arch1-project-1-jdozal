@@ -99,10 +99,28 @@ struct Employee *search(Employee *e, char *n) {
 
 /* Read file and rebuild bst */ 
 void readFile(FILE *fp){
-  fp = fopen("/tmp/test.txt", "w+");
+  char line[100];
+  char name[100];
+  printf("TEST READ\n");
   fprintf(fp, "This is testing for fprintf...\n");
   fputs("This is testing for fputs...\n", fp);
-  fclose(fp);
+  int i = 1;
+  while(fgets(line, 255, fp) != NULL)
+    {
+      /* get a line, up to 255 chars from fp  done if NULL */
+      sscanf  ( line, "%s",name);
+      printf("%d : %s\n", i, line );
+    }
+  
+  /*fscanf(fp, "%s", buff);
+  printf("1 : %s\n", buff );
+
+  fgets(buff, 255, (FILE*)fp);
+  printf("2: %s\n", buff );
+
+  fgets(buff, 255, (FILE*)fp);
+  printf("3: %s\n", buff ); */
+  
 }
 void removeEmployee(Employee *e){
 

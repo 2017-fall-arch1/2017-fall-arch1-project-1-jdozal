@@ -15,6 +15,4 @@ clean:
 
 demo: bstDemo
 	./bstDemo
-	#(echo b; echo a; echo c; echo h; echo d) | ./bstDemo
-	#echo hello;
 
