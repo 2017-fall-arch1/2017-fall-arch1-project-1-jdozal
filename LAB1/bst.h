@@ -29,5 +29,5 @@ struct Employee *search(Employee *e, char *n);
 void removeEmployee(Employee *e);
 
 /* reads file to create bst */
-void readFile(FILE *fp);
+BST *readFile(FILE *fp);
 #endif

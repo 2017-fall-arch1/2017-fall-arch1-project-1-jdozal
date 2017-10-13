@@ -46,11 +46,9 @@ void bstPut(BST *bst, char *n) {
 
   /* locate employee in bst */
   if(bst->root){
-    printf("Employee: <%s>\n", ncopy);
     Employee *curr = bst->root;
     /* looking for leaf*/
     while(curr) {
-      printf("test\n");
       if(strcmp(curr->name, ncopy)<0){
 	if(curr->right == 0){
 	  curr->right = e;
@@ -97,23 +95,25 @@ struct Employee *search(Employee *e, char *n) {
   return e;
 }
 
-/* Read file and rebuild bst */ 
-void readFile(FILE *fp){
+/* Read file and rebuild bst */
+BST *readFile(FILE *fp){
+  BST *bst = BSTAlloc();
   char line[100];
   char name[100];
   printf("TEST READ\n");
   /* fprintf(fp, "This is testing for fprintf...\n");
      fputs("This is testing for fputs...\n", fp);*/
   int i = 1;
-
-  printf("%s\n", fgets(line,100,fp));
   while(fgets(line, 255, fp) != NULL)
     {
       /* get a line, up to 255 chars from fp  done if NULL */
       sscanf  ( line, "%s",name);
-      printf("%d : %s\n", i, line );
+      bstPut(bst, name);
+      i++;
     }
-  
+
+  printAsc(bst->root);
+  return bst;
   /*fscanf(fp, "%s", buff);
   printf("1 : %s\n", buff );
 

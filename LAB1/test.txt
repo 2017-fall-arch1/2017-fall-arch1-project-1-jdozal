@@ -1,10 +1,6 @@
-a
-s
-d
-f
+h
 g
-c
-This is testing for fprintf...
-This is testing for fputs...
-This is testing for fprintf...
-This is testing for fputs...
+i
+a
+l
+z

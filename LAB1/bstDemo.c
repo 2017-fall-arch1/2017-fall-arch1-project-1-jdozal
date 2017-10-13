@@ -42,9 +42,7 @@ void add(BST *bst){
   printAsc(bst->root);
 }
 
-void interface(){
- /* Make empty BST */  
- BST *bst = BSTAlloc();
+void interface(BST *bst){
  
  printf("Welcome to the Personnel Management System\n\n Enter a number to perform an action:\n  1: Add a new employee\n  2: Remove an employee\n  3: List  all employees 0: Exit\n\n");
 
@@ -71,36 +69,18 @@ void interface(){
    }
 }
 int main(){
+  BST *bst;
   char buf[100];
   FILE *fp;
   fp = fopen("test.txt", "r+");
   if(fp){
-    readFile(fp);
+    bst = readFile(fp);
   } else {
     printf("Not such file\n");
   }
   fclose(fp);
-  /*interface();*/
-  
-  /* if(option =='0'){
-    printf("Tenkiubai\n");
-    return 0;
-  }
-  if(option == '1'){
-    printf("Add\n");
-  }if(option == '2'){
-    printf("Remove\n");
-  }if(option == '3'){
-    printf("List\n");
-  }else{
-    printf("Not a valid option");
-  }
-  */
-  
-  /*while(gets_n(buf, 100))
-    bstPut(bst, buf);
 
-  printf("Start printing list ascending order: \n");
+  /*  printf("Start printing list ascending order: \n");
   Employee *r = bst->root;
   printAsc(r);
   */
