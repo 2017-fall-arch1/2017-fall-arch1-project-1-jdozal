@@ -102,9 +102,11 @@ void readFile(FILE *fp){
   char line[100];
   char name[100];
   printf("TEST READ\n");
-  fprintf(fp, "This is testing for fprintf...\n");
-  fputs("This is testing for fputs...\n", fp);
+  /* fprintf(fp, "This is testing for fprintf...\n");
+     fputs("This is testing for fputs...\n", fp);*/
   int i = 1;
+
+  printf("%s\n", fgets(line,100,fp));
   while(fgets(line, 255, fp) != NULL)
     {
       /* get a line, up to 255 chars from fp  done if NULL */

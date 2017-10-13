@@ -73,7 +73,7 @@ void interface(){
 int main(){
   char buf[100];
   FILE *fp;
-  fp = fopen("test.txt", "a");
+  fp = fopen("test.txt", "r+");
   if(fp){
     readFile(fp);
   } else {
