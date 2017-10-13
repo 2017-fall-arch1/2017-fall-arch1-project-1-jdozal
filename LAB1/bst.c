@@ -97,6 +97,13 @@ struct Employee *search(Employee *e, char *n) {
   return e;
 }
 
+/* Read file and rebuild bst */ 
+void readFile(FILE *fp){
+  fp = fopen("/tmp/test.txt", "w+");
+  fprintf(fp, "This is testing for fprintf...\n");
+  fputs("This is testing for fputs...\n", fp);
+  fclose(fp);
+}
 void removeEmployee(Employee *e){
 
   printf("<%s>\n", e->name);

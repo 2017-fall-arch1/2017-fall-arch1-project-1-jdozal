@@ -41,13 +41,12 @@ void add(BST *bst){
   bstPut(bst, name);
   printAsc(bst->root);
 }
-int main(){
-  char buf[100];
 
-  /* Make empty BST */
-  BST *bst = BSTAlloc();
-
-  printf("Welcome to the Personnel Management System\n\n Enter a number to perform an action:\n  1: Add a new employee\n  2: Remove an employee\n  3: List  all employees 0: Exit\n\n");
+void interface(){
+ /* Make empty BST */  
+ BST *bst = BSTAlloc();
+ 
+ printf("Welcome to the Personnel Management System\n\n Enter a number to perform an action:\n  1: Add a new employee\n  2: Remove an employee\n  3: List  all employees 0: Exit\n\n");
 
    for(;;){
      printf("\nOption: ");
@@ -55,7 +54,7 @@ int main(){
     switch (option) {
     case '0':
       printf("\nBye");
-      return 0;
+      return;
     case '1':
       add(bst);
       break;
@@ -70,6 +69,12 @@ int main(){
   }
     getchar(); /* getting rid of new lines */
    }
+}
+int main(){
+  char buf[100];
+  
+  interface();
+  
   /* if(option =='0'){
     printf("Tenkiubai\n");
     return 0;
