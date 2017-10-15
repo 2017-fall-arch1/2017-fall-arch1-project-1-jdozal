@@ -25,41 +25,54 @@ void rmv(BST *bst) {
 
   printf("Enter employee to remove: ");
   scanf("%s", name);
+  Employee *parent = getParent(bst->root, bst->root, name);
   Employee *e = search(bst->root, name);
   /* if employee is indeed in the bst call removeEmployee */
   if(e)
-    removeEmployee(e);
+    removeEmployee(e, parent);
   
 }
 
 /* helper function to add, scans name to add and calls bstPut  */
-void add(BST *bst){
+void add(BST *bst, const char * filename){
+  FILE *fw = fopen(filename, "a");
   char name[100];
-
   printf("Enter new employee: ");
   scanf("%s", name);
   bstPut(bst, name);
+  fprintf(fw, "%s\n", name);
   printAsc(bst->root);
 }
 
-void interface(BST *bst){
- 
- printf("Welcome to the Personnel Management System\n\n Enter a number to perform an action:\n  1: Add a new employee\n  2: Remove an employee\n  3: List  all employees 0: Exit\n\n");
+void interface(){
+ BST *bst;
+ const char *filename="test.txt";
+  FILE *fp;
+  fp = fopen(filename, "r+");
+  if(fp){
+    bst = readFile(fp);
+  } else {
+    printf("Not such file\n");
+  }
+  fclose(fp);
+  
+ printf("Welcome to the Personnel Management System\n\n Enter a number to perform an action:\n  1: Add a new employee\n  2: Remove an employee\n  3: List  all employees\n  0: Exit\n\n");
 
    for(;;){
      printf("\nOption: ");
      int option = getchar();
     switch (option) {
     case '0':
-      printf("\nBye");
+      printf("");
       return;
     case '1':
-      add(bst);
+      add(bst,filename);
       break;
     case '2':
       rmv(bst);
       break;
     case '3':
+      printf("Listing all employees in alphabetical order: \n");
       printAsc(bst->root);
       break;
     default:
@@ -68,18 +81,9 @@ void interface(BST *bst){
     getchar(); /* getting rid of new lines */
    }
 }
-int main(){
-  BST *bst;
-  char buf[100];
-  FILE *fp;
-  fp = fopen("test.txt", "r+");
-  if(fp){
-    bst = readFile(fp);
-  } else {
-    printf("Not such file\n");
-  }
-  fclose(fp);
 
+int main(){
+  interface();
   /*  printf("Start printing list ascending order: \n");
   Employee *r = bst->root;
   printAsc(r);

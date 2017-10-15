@@ -26,8 +26,10 @@ void printAsc(Employee *e);
 struct Employee *search(Employee *e, char *n);
 
 /* removes employee */
-void removeEmployee(Employee *e);
+void removeEmployee(Employee *e, Employee *parent);
 
+/* search for parent */
+struct Employee *getParent(Employee *curr, Employee *prev, char *n);
 /* reads file to create bst */
 BST *readFile(FILE *fp);
 #endif

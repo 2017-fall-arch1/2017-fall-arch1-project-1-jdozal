@@ -23,6 +23,25 @@ int isLeaf(Employee *e){
   return 0;
 }
 
+/* get parent node */
+struct Employee *getParent(Employee *curr, Employee *prev, char *n) {
+  if(!curr){
+    printf("%s is not on the list\n", n);
+    return curr;
+  }
+  int cmp = strcmp(curr->name, n);
+
+  if(cmp == 0)
+    return prev;
+  if(cmp < 0){
+    return getParent(curr->right, curr, n);
+  }
+  if(cmp > 0){
+    return getParent(curr->left, curr, n);
+  }
+  return curr;
+  
+}
 /* append a copy of name to bst */
 void bstPut(BST *bst, char *n) {
   int len;
@@ -73,7 +92,7 @@ void printAsc(Employee *e) {
     return;
   }
   printAsc(e->left);
-  printf("Employee: <%s>\n", e->name);
+  printf("%s\n", e->name);
   printAsc(e->right);
 }
 
@@ -83,7 +102,7 @@ struct Employee *search(Employee *e, char *n) {
     return e;
   }
   int cmp = strcmp(e->name, n);
-
+  
   if(cmp == 0)
     return e;
   if(cmp < 0){
@@ -100,10 +119,11 @@ BST *readFile(FILE *fp){
   BST *bst = BSTAlloc();
   char line[100];
   char name[100];
-  printf("TEST READ\n");
-  /* fprintf(fp, "This is testing for fprintf...\n");
-     fputs("This is testing for fputs...\n", fp);*/
+  /* printf("TEST READ\n");
+  fprintf(fp, "This is testing for fprintf...\n");
+  fputs("This is testing for fputs...\n", fp);*/
   int i = 1;
+
   while(fgets(line, 255, fp) != NULL)
     {
       /* get a line, up to 255 chars from fp  done if NULL */
@@ -124,18 +144,24 @@ BST *readFile(FILE *fp){
   printf("3: %s\n", buff ); */
   
 }
-void removeEmployee(Employee *e){
+void removeEmployee(Employee *e, Employee *parent){
 
   printf("<%s>\n", e->name);
-  printf("right = %s", e->right->name);
+  printf("p: <%s>\n", parent ->name);
+  /* printf("right = %s", e->right->name);*/
   if(e->left && e->right){
     printf("both children present");
   } else if(e->left){
     printf("only left present");
+    
   } else if(e->right){
     printf("only right  present");
+    e->name = e->right->name;
+    e->right = 0;
   } else{
     printf("is leaf");
+    free(e->name);
+    free(e);
     
   }
 }
