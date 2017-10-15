@@ -144,24 +144,49 @@ BST *readFile(FILE *fp){
   printf("3: %s\n", buff ); */
   
 }
+void replaceInParent(Employee *parent, Employee *child, Employee *newChild){
+  if(parent->right == child){
+    parent->right = newChild;
+  }
+  else if(parent->left == child){
+    parent->left = newChild;
+  }
+}
+
+struct Employee *getLargestLeft(Employee *e) {
+  Employee *parent = e;
+  Employee *largest = e->left;
+
+  while(!isLeaf(largest)){
+    parent = largest;
+    largest=largest->right;
+  }
+  parent->right = 0;
+  return largest;
+}
+
 void removeEmployee(Employee *e, Employee *parent){
 
   printf("<%s>\n", e->name);
   printf("p: <%s>\n", parent ->name);
-  /* printf("right = %s", e->right->name);*/
   if(e->left && e->right){
+    Employee *newChild = getLargestLeft(e);
+    printf("largest = <%s>", newChild->name);
+    e->name = newChild->name;
     printf("both children present");
   } else if(e->left){
     printf("only left present");
-    
+    replaceInParent(parent, e, e->left);
   } else if(e->right){
     printf("only right  present");
-    e->name = e->right->name;
-    e->right = 0;
+    printf("right: <%s> \n", e->right->name);
+    replaceInParent(parent, e, e->right);
   } else{
     printf("is leaf");
-    free(e->name);
-    free(e);
-    
+    if(parent->right == e){
+      parent->right = 0;
+    }else{
+      parent->left = 0;
+    }
   }
 }
