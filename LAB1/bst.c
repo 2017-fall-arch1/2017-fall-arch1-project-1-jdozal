@@ -95,6 +95,7 @@ void bstPut(BST *bst, char *n) {
   }
 }
 
+
 /* Print employees in ascending order */
 void printAsc(Employee *e) {
   if(!e){
@@ -102,6 +103,15 @@ void printAsc(Employee *e) {
   }
   printAsc(e->left);
   printf("%s\n", e->name); /* go left, print, go right */
+  printAsc(e->right);
+}
+
+/* Print preorder to file to preserve "balance", and deletes employees that were removed */
+void printToFile(FILE *fp, Employee *e) {
+  printf("%s\n", e->name);
+  fputs(e->name, fp); /* print, print, go right */
+  fputs("/n", fp); /* adding new line */
+  printAsc(e->left);
   printAsc(e->right);
 }
 

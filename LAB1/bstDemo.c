@@ -78,7 +78,10 @@ void interface(){
      int option = getchar();
     switch (option) {
     case '0':
-      printf("");
+      /* Rewriting tree into file to make it more "balanced" */
+      fp = fopen(filename, "w+");
+      printToFile(fp, bst->root);
+      fclose(fp);
       return;
     case '1':
       add(bst,filename);
