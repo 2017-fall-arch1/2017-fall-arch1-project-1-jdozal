@@ -40,15 +40,13 @@ void rmv(BST *bst) {
 }
 
 /* helper function to add, scans name to add and calls bstPut  */
-void add(BST *bst, const char * filename){
+void add(BST *bst){
   /* open file to append new employee */
-  FILE *fw = fopen(filename, "a");
   char name[255];
   printf("Enter new employee: ");
   getchar(); /* getting rid of new line */
   scanf("%[^\t\n]", name); /* scan name from terminal */
   bstPut(bst, name); /* add employee to bst */ 
-  fputs(name, fw); /* add employee to text file */ 
   printf("New list after addition: \n");
   printAsc(bst->root); 
 }
@@ -84,7 +82,7 @@ void interface(){
       fclose(fp);
       return;
     case '1':
-      add(bst,filename);
+      add(bst);
       break;
     case '2':
       rmv(bst);

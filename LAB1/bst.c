@@ -110,7 +110,7 @@ void printAsc(Employee *e) {
 void printToFile(FILE *fp, Employee *e) {
   if(!e)
     return;
-   fprintf(fp,"%s\n", e->name); /* print, go left, go right */
+  fprintf(fp,"%s\n", e->name); /* print, go left, go right */
   printToFile(fp, e->left);
   printToFile(fp, e->right);
 }
