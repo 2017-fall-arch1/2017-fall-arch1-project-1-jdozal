@@ -16,32 +16,39 @@ BST *BSTAlloc() {
   return bst;
 }
 
-/* Check if employee is leaf */
+/* Check if employee is a leaf in the bst */
 int isLeaf(Employee *e){
   if(!e->right && !e->left)
     return 1;
   return 0;
 }
 
-/* get parent node */
+/* return parent node */
 struct Employee *getParent(Employee *curr, Employee *prev, char *n) {
   if(!curr){
     printf("%s is not on the list\n", n);
     return curr;
   }
+  /* compare name of current employee with input name*/
   int cmp = strcmp(curr->name, n);
 
+  /* if value of cmp is 0, strings are equal */ 
   if(cmp == 0)
     return prev;
+
+  /* if value of cmp is less than 0, input string is after curr employee */
   if(cmp < 0){
     return getParent(curr->right, curr, n);
   }
+
+  /* if value of cmp is less than 0, input string is before curr employee */ 
   if(cmp > 0){
     return getParent(curr->left, curr, n);
   }
   return curr;
-  
+
 }
+
 /* append a copy of name to bst */
 void bstPut(BST *bst, char *n) {
   int len;
@@ -49,13 +56,13 @@ void bstPut(BST *bst, char *n) {
   Employee *e;
 
   doCheck(bst);
-  /* w = freshly allocated copy of putWord */
+  /* ncopy = freshly allocated copy of n */
   for (len = 0; n[len]; len++) /* compute length */
     ;
   ncopy = (char *)malloc(len+1);
   for (len = 0; n[len]; len++) /* copy chars */
     ncopy[len] = n[len];
-  ncopy[len] = 0;			/* terminate copy */
+  ncopy[len] = 0;	       /* terminate copy */
 
   /* e = new Employee with copy of name */
   e = (Employee *)malloc(sizeof(Employee));
@@ -68,14 +75,14 @@ void bstPut(BST *bst, char *n) {
     Employee *curr = bst->root;
     /* looking for leaf*/
     while(curr) {
-      if(strcmp(curr->name, ncopy)<0){
+      if(strcmp(curr->name, ncopy)<0){ /* if new employee goes after curr */
 	if(curr->right == 0){
 	  curr->right = e;
 	  return;
 	}
 	curr = curr->right;
       }else{
-	if(curr->left == 0){
+	if(curr->left == 0){ /* else new employee goes before curr */
 	  curr->left = e;
 	  return;
 	}
@@ -83,106 +90,121 @@ void bstPut(BST *bst, char *n) {
       }
     }
   }else{
+    /* if tree is empty */ 
     bst->root = e;
   }
 }
 
+/* Print employees in ascending order */
 void printAsc(Employee *e) {
   if(!e){
     return;
   }
   printAsc(e->left);
-  printf("%s\n", e->name);
+  printf("%s\n", e->name); /* go left, print, go right */
   printAsc(e->right);
 }
 
+/* search and return employee with name n */
 struct Employee *search(Employee *e, char *n) {
   if(!e){
     printf("%s is not on the list\n", n);
     return e;
   }
+
+  /* get value of string comparision between current node and string n */
   int cmp = strcmp(e->name, n);
-  
+
+  /* if cmp is 0, strings are the same, return curr employee */
   if(cmp == 0)
     return e;
-  if(cmp < 0){
+
+  /* if cmp is less than 0, traverse to right child */
+  if(cmp < 0)
     return search(e->right, n);
-  }
-  if(cmp > 0){
+
+  /* if cmp is more than 0, traverse to left child */
+  if(cmp > 0)
     return search(e->left, n);
-  }
+  
   return e;
 }
 
 /* Read file and rebuild bst */
 BST *readFile(FILE *fp){
   BST *bst = BSTAlloc();
-  char line[100];
-  char name[100];
-  /* printf("TEST READ\n");
-  fprintf(fp, "This is testing for fprintf...\n");
-  fputs("This is testing for fputs...\n", fp);*/
-  int i = 1;
-
+  char line[255];
+  char name[255];
+ 
   while(fgets(line, 255, fp) != NULL)
     {
       /* get a line, up to 255 chars from fp  done if NULL */
-      sscanf  ( line, "%s",name);
+      sscanf  ( line, "%[^\t\n]s",name);
+      /* add curr name to bst */
       bstPut(bst, name);
-      i++;
     }
 
-  printAsc(bst->root);
-  return bst;
-  /*fscanf(fp, "%s", buff);
-  printf("1 : %s\n", buff );
+  /* print in ascending order, for debugging purposes */
+  /*printAsc(bst->root);*/
+  return bst; 
+}
 
-  fgets(buff, 255, (FILE*)fp);
-  printf("2: %s\n", buff );
+/* replace parent node with newChild, used for remove fuction */ 
+void replaceInParent(Employee *parent, Employee *child, Employee *newChild){
+  /* replace right child */
+  if(parent->right == child)
+    parent->right = newChild;
 
-  fgets(buff, 255, (FILE*)fp);
-  printf("3: %s\n", buff ); */
+  /* replace left child */
+  else if(parent->left == child)
+    parent->left = newChild;
   
 }
-void replaceInParent(Employee *parent, Employee *child, Employee *newChild){
-  if(parent->right == child){
-    parent->right = newChild;
-  }
-  else if(parent->left == child){
-    parent->left = newChild;
-  }
-}
 
+/* get last element on left child of given employee */
 struct Employee *getLargestLeft(Employee *e) {
-  Employee *parent = e;
-  Employee *largest = e->left;
+  Employee *parent = e; /* set parent as e */
+  Employee *largest = e->left; /* start at left child */ 
 
+  /* if left employee is leaf replace node with left child */
+  if(isLeaf(largest)) {
+    parent->left = 0;
+    return largest;
+  }
+  /* traverse left node to find last employee */
   while(!isLeaf(largest)){
     parent = largest;
     largest=largest->right;
   }
+  /* delete pointer to largest element from immediate parent */ 
   parent->right = 0;
   return largest;
 }
 
+/* remove employee with employee to be removed, and parent as inputs */ 
 void removeEmployee(Employee *e, Employee *parent){
+  /* print employee to be removed, for debugging purposes */
+  /* printf("<%s>\n", e->name);
+     printf("p: <%s>\n", parent ->name); */
 
-  printf("<%s>\n", e->name);
-  printf("p: <%s>\n", parent ->name);
+  /* if current employee has both children, replace with last element in left child */
   if(e->left && e->right){
     Employee *newChild = getLargestLeft(e);
-    printf("largest = <%s>", newChild->name);
     e->name = newChild->name;
-    printf("both children present");
-  } else if(e->left){
-    printf("only left present");
+  }
+  
+  /* if only left child is present, replace node with left child */
+  else if(e->left){
     replaceInParent(parent, e, e->left);
-  } else if(e->right){
-    printf("only right  present");
-    printf("right: <%s> \n", e->right->name);
+  }
+
+  /* if only left child is present, replace node with right child */
+  else if(e->right){
     replaceInParent(parent, e, e->right);
-  } else{
-    printf("is leaf");
+  }
+
+  /* if employee is leaf delete pointer from parent to employee */
+  else{
     if(parent->right == e){
       parent->right = 0;
     }else{

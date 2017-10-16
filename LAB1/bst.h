@@ -30,6 +30,8 @@ void removeEmployee(Employee *e, Employee *parent);
 
 /* search for parent */
 struct Employee *getParent(Employee *curr, Employee *prev, char *n);
+
 /* reads file to create bst */
 BST *readFile(FILE *fp);
+
 #endif

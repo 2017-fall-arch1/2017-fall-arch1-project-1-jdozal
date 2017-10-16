@@ -21,38 +21,53 @@ int gets_n(char *s, int limit) {
 
 /* helper function to remove, scans employee to remove, calls seach and remove  */
 void rmv(BST *bst) {
-  char name[100];
+  char name[255];
 
   printf("Enter employee to remove: ");
-  scanf("%s", name);
-  Employee *parent = getParent(bst->root, bst->root, name);
+  getchar(); /* getting rid of new line */
+  scanf("%[^\t\n]", name); /* reads input from terminal */
+
+  /* search for employee node  */
   Employee *e = search(bst->root, name);
   /* if employee is indeed in the bst call removeEmployee */
-  if(e)
+  if(e) {
+    Employee *parent = getParent(bst->root, bst->root, name);
     removeEmployee(e, parent);
+    printf("New list after removal: \n");
+    printAsc(bst->root);
+  }
   
 }
 
 /* helper function to add, scans name to add and calls bstPut  */
 void add(BST *bst, const char * filename){
+  /* open file to append new employee */
   FILE *fw = fopen(filename, "a");
-  char name[100];
+  char name[255];
   printf("Enter new employee: ");
-  scanf("%s", name);
-  bstPut(bst, name);
-  fprintf(fw, "%s\n", name);
-  printAsc(bst->root);
+  getchar(); /* getting rid of new line */
+  scanf("%[^\t\n]", name); /* scan name from terminal */
+  bstPut(bst, name); /* add employee to bst */ 
+  fputs(name, fw); /* add employee to text file */ 
+  printf("New list after addition: \n");
+  printAsc(bst->root); 
 }
 
+/* simple user interface so that a user may: Add a new employee name, remove an employee name, list all employee names, */
 void interface(){
- BST *bst;
- const char *filename="test.txt";
+  BST *bst; /* binary search tree */
+ const char *filename="names.txt"; 
   FILE *fp;
-  fp = fopen(filename, "r+");
+
+  /* opens a file for reading. The file must exist. */ 
+  fp = fopen(filename, "r");
   if(fp){
     bst = readFile(fp);
   } else {
-    printf("Not such file\n");
+    /* if file does not exist create file */
+    printf("File <%s> does not exist, creating file... \n", filename);
+    fp = fopen(filename, "w+");
+    fprintf(fp, "");
   }
   fclose(fp);
   
@@ -84,9 +99,5 @@ void interface(){
 
 int main(){
   interface();
-  /*  printf("Start printing list ascending order: \n");
-  Employee *r = bst->root;
-  printAsc(r);
-  */
   return 0;
 }
