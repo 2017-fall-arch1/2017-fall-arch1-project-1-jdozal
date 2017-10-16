@@ -108,11 +108,11 @@ void printAsc(Employee *e) {
 
 /* Print preorder to file to preserve "balance", and deletes employees that were removed */
 void printToFile(FILE *fp, Employee *e) {
-  printf("%s\n", e->name);
-  fputs(e->name, fp); /* print, print, go right */
-  fputs("/n", fp); /* adding new line */
-  printAsc(e->left);
-  printAsc(e->right);
+  if(!e)
+    return;
+   fprintf(fp,"%s\n", e->name); /* print, go left, go right */
+  printToFile(fp, e->left);
+  printToFile(fp, e->right);
 }
 
 /* search and return employee with name n */

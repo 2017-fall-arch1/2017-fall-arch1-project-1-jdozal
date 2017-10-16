@@ -34,4 +34,6 @@ struct Employee *getParent(Employee *curr, Employee *prev, char *n);
 /* reads file to create bst */
 BST *readFile(FILE *fp);
 
+/* writes employees in file */
+void printToFile(FILE *fp, Employee *e);
 #endif
